@@ -1,7 +1,4 @@
-// User schema code
-const { kMaxLength } = require('buffer');
 const mongoose = require('mongoose');
-const { userInfo, type } = require('os');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({

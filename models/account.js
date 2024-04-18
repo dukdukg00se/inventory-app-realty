@@ -1,4 +1,3 @@
-// Account schema
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -19,12 +18,10 @@ const AccountSchema = new Schema({
       ref: 'Home',
     },
   ],
-  messages: String,
   created_on: {
     type: Date,
     default: Date.now(),
   },
 });
 
-// Export model
 module.exports = mongoose.model('Account', AccountSchema);
