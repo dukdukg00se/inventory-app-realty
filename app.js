@@ -7,7 +7,22 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
+// Declare Express application object
 const app = express();
+
+// MongoDB pw: vxajGwoqEu1IY2Tl;
+// mongodb+srv://willwkhu:vxajGwoqEu1IY2Tl@cluster0.jysdyno.mongodb.net/inventory_app?retryWrites=true&w=majority&appName=Cluster0
+
+// Set up mongoose connection
+const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
+const mongoDB =
+  'mongodb+srv://willwkhu:vxajGwoqEu1IY2Tl@cluster0.jysdyno.mongodb.net/inventory_app?retryWrites=true&w=majority&appName=Cluster0';
+
+async function main() {
+  await mongoose.connect(mongoDB);
+}
+main().catch((err) => console.log('!!!!error: ', err));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
