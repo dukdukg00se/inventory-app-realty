@@ -24,4 +24,9 @@ const AccountSchema = new Schema({
   },
 });
 
+// Virtual for account URL
+AccountSchema.virtual('url').get(function () {
+  return `/admin/account/${this._id}`;
+});
+
 module.exports = mongoose.model('Account', AccountSchema);

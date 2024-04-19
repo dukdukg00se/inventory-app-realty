@@ -26,4 +26,9 @@ const PropertyInfoSchema = new Schema({
   other_features: String,
 });
 
+// Virtual for property info URL
+PropertyInfoSchema.virtual('url').get(function () {
+  return `/admin/propertyinfo/${this._id}`;
+});
+
 module.exports = mongoose.model('PropertyInfo', PropertyInfoSchema);
