@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const AccountSchema = new Schema({
   type: {
     type: String,
-    enum: ['basic', 'premium', 'platinum'],
+    enum: ['Basic', 'Guided', 'White Glove'],
+    default: 'Basic',
     required: true,
   },
   user: {
