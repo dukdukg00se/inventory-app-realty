@@ -24,18 +24,8 @@ const InteriorInfoSchema = new Schema({
       required: true,
     },
   ],
-  heating: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
-  cooling: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
+  heating: String,
+  cooling: String,
   appliances: String,
   other_features: String,
 });
