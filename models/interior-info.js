@@ -2,28 +2,26 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const InteriorInfoSchema = new Schema({
-  Bedrooms: {
+  bedrooms: {
     type: Number,
     MaxLength: 100,
     required: true,
   },
-  Bathrooms: {
+  bathrooms: {
     type: Number,
     MaxLength: 100,
     required: true,
   },
-  kitchen: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
-  flooring: [
-    {
-      type: String,
-      required: true,
-    },
-  ],
+  kitchen: {
+    type: String,
+    required: true,
+  },
+
+  flooring: {
+    type: String,
+    required: true,
+  },
+
   heating: String,
   cooling: String,
   appliances: String,
