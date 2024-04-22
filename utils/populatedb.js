@@ -7,12 +7,12 @@ console.log(
 // Get arguments passed on command line
 const userArgs = process.argv.slice(2);
 
-const User = require('./models/user');
-const InteriorInfo = require('./models/interior-info');
-const PropertyInfo = require('./models/property-info');
-const CommunityInfo = require('./models/community-info');
-const Home = require('./models/home');
-const Account = require('./models/account');
+const User = require('../models/user');
+const InteriorInfo = require('../models/interior-info');
+const PropertyInfo = require('../models/property-info');
+const CommunityInfo = require('../models/community-info');
+const Home = require('../models/home');
+const Account = require('../models/account');
 
 const users = [];
 const interiorInfos = [];
@@ -187,7 +187,9 @@ async function createInteriorInfos() {
       'Kitchen island, Granite counters',
       'Wood, Vinyl',
       'Forced air',
-      'Central air'
+      'Central air',
+      false,
+      false
     ),
     interiorInfoCreate(
       1,
@@ -196,7 +198,9 @@ async function createInteriorInfos() {
       'Stone counters, Double sinks',
       'Vinyl',
       'Wood stove',
-      'Wall unit'
+      'Wall unit',
+      false,
+      false
     ),
     interiorInfoCreate(
       2,
@@ -227,7 +231,9 @@ async function createInteriorInfos() {
       'Stone counters, Wood cabinets',
       'Wood laminate',
       'Fireplace',
-      'Central Air'
+      'Central Air',
+      false,
+      false
     ),
     interiorInfoCreate(
       5,
@@ -462,17 +468,16 @@ async function createAccounts() {
   console.log('Adding accounts');
 
   await Promise.all([
-    accountCreate(0, 'White Glove', users[0], [
-      homes[0],
-      homes[1],
-      homes[2],
-      false,
-    ]),
+    accountCreate(
+      0,
+      'White Glove',
+      users[0],
+      [homes[0], homes[1], homes[2]],
+      false
+    ),
     accountCreate(1, 'Basic', users[1], false, false),
     accountCreate(2, 'Basic', users[2], [homes[3]], false),
     accountCreate(3, 'Guided', users[3], [homes[4], homes[5]], false),
     accountCreate(4, 'Basic', users[4], [homes[1], homes[6], homes[7]], false),
   ]);
 }
-
-console.log(accounts[1]);
