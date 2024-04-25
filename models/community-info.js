@@ -11,7 +11,7 @@ const CommunityInfoSchema = new Schema({
 
 // Virtual for community info URL
 CommunityInfoSchema.virtual('url').get(function () {
-  return `/admin/communityinfo/${this._id}`;
+  return `/communityinfo/${this._id}`;
 });
 
 module.exports = mongoose.model('CommunityInfo', CommunityInfoSchema);

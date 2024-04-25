@@ -30,7 +30,7 @@ const HomeSchema = new Schema({
 
 // Virtual for home URL
 HomeSchema.virtual('url').get(function () {
-  return `/admin/home/${this._id}`;
+  return `/home/${this._id}`;
 });
 
 module.exports = mongoose.model('Home', HomeSchema);

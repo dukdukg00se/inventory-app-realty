@@ -20,7 +20,7 @@ const UserSchema = new Schema({
 
 // Virtual for user URL
 UserSchema.virtual('url').get(function () {
-  return `/admin/user/${this.id}`;
+  return `/user/${this.id}`;
 });
 
 // Export model

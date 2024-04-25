@@ -30,7 +30,7 @@ const InteriorInfoSchema = new Schema({
 
 // Virtual for interior info URL
 InteriorInfoSchema.virtual('url').get(function () {
-  return `/admin/interiorinfo/${this._id}`;
+  return `/interiorinfo/${this._id}`;
 });
 
 module.exports = mongoose.model('InteriorInfo', InteriorInfoSchema);
