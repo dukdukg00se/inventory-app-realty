@@ -3,7 +3,16 @@ const asyncHandler = require('express-async-handler');
 
 // Display list of all homes.
 exports.home_list = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: home list');
+  const allHomes = await Home.find({}, 'address price')
+    .sort({ price: 1 })
+    .exec();
+
+  console.log(allHomes);
+
+  res.render('./pages/admin/home/home-list', {
+    title: 'Homes List',
+    homes_list: allHomes,
+  });
 });
 
 // Display detail page for a specific home.

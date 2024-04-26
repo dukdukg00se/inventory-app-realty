@@ -3,7 +3,12 @@ const asyncHandler = require('express-async-handler');
 
 // Display list of all CommunityInfos.
 exports.communityinfo_list = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: CommunityInfo list');
+  const allCommInfo = await CommunityInfo.find().sort({ region: 1 }).exec();
+
+  res.render('./pages/admin/community-info/community-info-list', {
+    title: 'Community Information',
+    community_info_list: allCommInfo,
+  });
 });
 
 // Display detail page for a specific CommunityInfo.
