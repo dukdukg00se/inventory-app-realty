@@ -21,13 +21,19 @@ const AccountSchema = new Schema({
   ],
   created_on: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
 });
 
 // Virtual for account URL
 AccountSchema.virtual('url').get(function () {
-  return `/account/${this._id}`;
+  return `/admin/account/${this._id}`;
+});
+
+// Virtual to return date formatted to MM-DD-YYYY
+// Did not need to use date-fns here
+AccountSchema.virtual('created_on_formatted').get(function () {
+  return this.created_on.toLocaleDateString();
 });
 
 module.exports = mongoose.model('Account', AccountSchema);
