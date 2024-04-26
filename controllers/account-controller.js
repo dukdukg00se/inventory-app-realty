@@ -25,7 +25,7 @@ exports.index = asyncHandler(async (req, res, next) => {
     User.countDocuments({}).exec(),
   ]);
 
-  res.render('admin', {
+  res.render('./pages/admin/index', {
     title: 'Admin Dashboard',
     accounts_count: numAccounts,
     communityinfos_count: numCommunityInfos,
@@ -38,7 +38,17 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Display list of Accounts
 exports.account_list = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Account List');
+  // res.send('NOT IMPLEMENTED: Account List');
+
+  const allAccounts = await Account.find({}, 'type user created_on')
+    .sort({ type: 1 })
+    .populate('user')
+    .exec();
+
+  res.render('./pages/admin/account/account-list', {
+    title: 'All Accounts',
+    accounts_list: allAccounts,
+  });
 });
 
 // Display detail page for a specific Account
