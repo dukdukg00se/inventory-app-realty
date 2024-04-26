@@ -5,13 +5,11 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const housesRouter = require('./routes/houses');
+const adminRouter = require('./routes/admin');
 
 // Declare Express application object
 const app = express();
-
-// MongoDB pw: vxajGwoqEu1IY2Tl;
-// mongodb+srv://willwkhu:vxajGwoqEu1IY2Tl@cluster0.jysdyno.mongodb.net/inventory_app?retryWrites=true&w=majority&appName=Cluster0
 
 // Set up mongoose connection
 const mongoose = require('mongoose');
@@ -19,10 +17,10 @@ mongoose.set('strictQuery', false);
 const mongoDB =
   'mongodb+srv://willwkhu:vxajGwoqEu1IY2Tl@cluster0.jysdyno.mongodb.net/inventory_app?retryWrites=true&w=majority&appName=Cluster0';
 
+main().catch((err) => console.log('!!!!error: ', err));
 async function main() {
   await mongoose.connect(mongoDB);
 }
-main().catch((err) => console.log('!!!!error: ', err));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,8 +32,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ROUTES
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/houses', housesRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
