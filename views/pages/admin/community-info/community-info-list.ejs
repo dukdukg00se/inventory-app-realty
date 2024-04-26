@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+  <%- include('../../../partials/head.ejs') %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <%- include('../../../partials/sidebar.ejs') %>
+
+        <main>
+          <h1><%=title%></h1>
+
+          <% if (community_info_list.length) { %>
+            <ul>
+              <% community_info_list.forEach(item => { %>
+                <li>
+                  <div>
+                    <a href="<%=item.url%>"><strong>Community Info ID: </strong><%=item._id%></a>
+                    <p><strong>Region: </strong><%=item.region%></p>
+                    <p><strong>Community Features: </strong><%=item.community_features%></p>
+                  </div>
+                </li>
+              <% }) %>
+            </ul>
+          <% } else { %>
+            <p>No Community Information Available.</p>
+          <% } %>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

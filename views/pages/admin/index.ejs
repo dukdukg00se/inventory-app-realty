@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <%- include('../../partials/head.ejs') %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <%- include('../../partials/sidebar.ejs') %>
+
+        <main>
+          <h1><%=title%></h1>
+          <p>
+            Welcome to the <em>Dashboard</em>. Manage customer accounts here.
+          </p>
+          <hr />
+          <h2>Dynamic Content</h2>
+          <p>This site has the following record counts:</p>
+          <ul>
+            <li><b>Accounts: <%=accounts_count%></b></li>
+            <li><b>Users: <%=users_count%></b></li>
+            <li><b>Homes: <%=homes_count%></b></li>
+            <li><b>Interior infos: <%=interiorinfos_count%></b></li>
+            <li><b>Property infos: <%=propertyinfos_count%></b></li>
+            <li><b>Community infos: <%=communityinfos_count%></b></li>
+          </ul>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

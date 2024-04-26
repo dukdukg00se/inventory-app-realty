@@ -1,11 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
+  <%- include('./partials/head.ejs') %>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    <div>
+      <h2>Important Links</h2>
+      <ul>
+        <a href="/admin">Admin Dashboard</a>
+        <a href="/houses">Our Houses</a>
+      </ul>
+    </div>
   </body>
 </html>
