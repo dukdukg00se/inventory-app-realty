@@ -8,6 +8,18 @@
 
         <main>
           <h1><%=title%></h1>
+
+          <% if (homes_list.length) { %>
+            <% homes_list.forEach(home => { %>
+              <div class="home-preview">
+                <a href="<%=home.url%>"><%=home.address%></a>
+                <h4>$<%=home.price%></h4>
+                <p><%=home.interior_info.bedrooms%> bds | <%=home.interior_info.bathrooms%> bths | <%=home.property_info.lot_size%></p>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p>No saved homes yet.</p>
+          <% } %>
         </main>
       </div>
     </div>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <%- include('../../../partials/head.ejs') %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <%- include('../../../partials/sidebar.ejs') %>
+
+        <main>
+          <h1><%=title%></h1>
+
+          <section>
+            <h2>Customer Information:</h2>
+            <p>
+              <strong>Name: </strong><%=account.user.first_name%>
+              <%=account.user.last_name%>
+            </p>
+            <p><strong>Type: </strong><%=account.type%></p>
+            <p><strong>ID: </strong><%=account._id%></p>
+            <p><strong>Email: </strong><%=account.user.email%></p>
+            <p>
+              <strong>Created On: </strong><%=account.created_on_formatted%>
+            </p>
+          </section>
+          <hr />
+          <section>
+            <h2>Customer Homes</h2>
+
+            <% if (account.homes.length) { %>
+              <% account.homes.forEach(home => { %>
+                <div class="home-preview">
+                  <a href="<%=home.url%>"><%=home.address%></a>
+                  <h4>$<%=home.price%></h4>
+                  <p><%=home.interior_info.bedrooms%> bds | <%=home.interior_info.bathrooms%> bths | <%=home.property_info.lot_size%></p>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <p>No saved homes yet.</p>
+            <% } %>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
