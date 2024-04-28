@@ -3,11 +3,12 @@ const asyncHandler = require('express-async-handler');
 
 // Display list of all homes.
 exports.home_list = asyncHandler(async (req, res, next) => {
-  const allHomes = await Home.find({}, 'address price')
+  const allHomes = await Home.find(
+    {},
+    'address price interior_info property_info.lot_size'
+  )
     .sort({ price: 1 })
     .exec();
-
-  console.log(allHomes);
 
   res.render('./pages/admin/home/home-list', {
     title: 'Homes List',
