@@ -8,16 +8,10 @@ console.log(
 const userArgs = process.argv.slice(2);
 
 const User = require('../models/user');
-const InteriorInfo = require('../models/interior-info');
-const PropertyInfo = require('../models/property-info');
-const CommunityInfo = require('../models/community-info');
 const Home = require('../models/home');
 const Account = require('../models/account');
 
 const users = [];
-const interiorInfos = [];
-const propertyInfos = [];
-const communityInfos = [];
 const homes = [];
 const accounts = [];
 
@@ -34,9 +28,6 @@ async function main() {
   console.log('Debug: Should be connected?');
 
   await createUsers();
-  await createInteriorInfos();
-  await createPropertyInfos();
-  await createCommunityInfos();
   await createHomes();
   await createAccounts();
 
@@ -61,71 +52,6 @@ async function userCreate(index, first_name, last_name, email) {
   console.log(`Added user: ${first_name} ${last_name}`);
 }
 
-async function interiorInfoCreate(
-  index,
-  bedrooms,
-  bathrooms,
-  kitchen,
-  flooring,
-  heating,
-  cooling,
-  appliances,
-  other
-) {
-  const interiorInfoDetail = {
-    bedrooms: bedrooms,
-    bathrooms: bathrooms,
-    kitchen: kitchen,
-    flooring: flooring,
-  };
-
-  if (heating != false) interiorInfoDetail.heating = heating;
-  if (cooling != false) interiorInfoDetail.heating = heating;
-  if (appliances != false) interiorInfoDetail.appliances = appliances;
-  if (other != false) interiorInfoDetail.other_features = other;
-
-  const interiorInfo = new InteriorInfo(interiorInfoDetail);
-  await interiorInfo.save();
-  interiorInfos[index] = interiorInfo;
-  console.log(`Added interior info number ${index}`);
-}
-
-async function propertyInfoCreate(
-  index,
-  parking,
-  lot_size,
-  construction_type,
-  year_built,
-  utilities,
-  other
-) {
-  const propertyInfoDetails = {
-    parking: parking,
-    lot_size: lot_size,
-    construction_type: construction_type,
-    year_built: year_built,
-    utilities: utilities,
-  };
-  if (other != false) propertyInfoDetails.other_features = other;
-
-  const propertyInfo = new PropertyInfo(propertyInfoDetails);
-  await propertyInfo.save();
-  propertyInfos[index] = propertyInfo;
-  console.log(`Added property info number ${index}`);
-}
-
-async function communityInfoCreate(index, community_features, region) {
-  const communityInfoDetails = {
-    community_features: community_features,
-    region: region,
-  };
-
-  const communityInfo = new CommunityInfo(communityInfoDetails);
-  await communityInfo.save();
-  communityInfos[index] = communityInfo;
-  console.log(`Added community info number ${index}`);
-}
-
 async function homeCreate(
   index,
   address,
@@ -134,15 +60,48 @@ async function homeCreate(
   property_info,
   community_info
 ) {
-  const homeDetail = {
-    address: address,
-    price: price,
-    interior_info: interior_info,
-    property_info: property_info,
-    community_info: community_info,
+  const interiorInfoDetails = {
+    bedrooms: interior_info.bedrooms,
+    bathrooms: interior_info.bathrooms,
+    kitchen: interior_info.kitchen,
+    flooring: interior_info.flooring,
   };
 
-  const home = new Home(homeDetail);
+  if (interior_info.heating != false)
+    interiorInfoDetails.heating = interior_info.heating;
+  if (interior_info.cooling != false)
+    interiorInfoDetails.cooling = interior_info.cooling;
+  if (interior_info.appliances != false)
+    interiorInfoDetails.appliances = interior_info.appliances;
+  if (interior_info.other_features != false)
+    interiorInfoDetails.other_features =
+      interior_info.appliances.other_features;
+
+  const propertyInfoDetails = {
+    parking: property_info.parking,
+    lot_size: property_info.lot_size,
+    construction_type: property_info.construction_type,
+    year_built: property_info.year_built,
+    utilities: property_info.utilities,
+  };
+
+  if (property_info.other_features != false)
+    propertyInfoDetails.other_features = property_info.other_features;
+
+  const communityInfoDetails = {
+    community_features: community_info.community_features,
+    region: community_info.region,
+  };
+
+  const homeDetails = {
+    address: address,
+    price: price,
+    interior_info: interiorInfoDetails,
+    property_info: propertyInfoDetails,
+    community_info: communityInfoDetails,
+  };
+
+  const home = new Home(homeDetails);
   await home.save();
   homes[index] = home;
   console.log(`Added home: ${address}`);
@@ -176,225 +135,214 @@ async function createUsers() {
   ]);
 }
 
-async function createInteriorInfos() {
-  console.log('Adding interior infos');
-
-  await Promise.all([
-    interiorInfoCreate(
-      0,
-      3,
-      3,
-      'Kitchen island, Granite counters',
-      'Wood, Vinyl',
-      'Forced air',
-      'Central air',
-      false,
-      false
-    ),
-    interiorInfoCreate(
-      1,
-      2,
-      1,
-      'Stone counters, Double sinks',
-      'Vinyl',
-      'Wood stove',
-      'Wall unit',
-      false,
-      false
-    ),
-    interiorInfoCreate(
-      2,
-      3,
-      3,
-      'Kitchen island, Stone counters, Soft-close cabinets',
-      'Wood, Vinyl, Stone',
-      'Forced Air',
-      'Central Air',
-      'Stainless steel refrigerator, Oven, Dishwasher',
-      'Hot tub, Putting green'
-    ),
-    interiorInfoCreate(
-      3,
-      4,
-      3,
-      'Granite counters, Double ovens',
-      'Wood laminate',
-      'Forced Air',
-      'Central Air',
-      'Stainless steel appliances',
-      'New water heater'
-    ),
-    interiorInfoCreate(
-      4,
-      2,
-      1,
-      'Stone counters, Wood cabinets',
-      'Wood laminate',
-      'Fireplace',
-      'Central Air',
-      false,
-      false
-    ),
-    interiorInfoCreate(
-      5,
-      3,
-      1,
-      'Kitchen Island',
-      'Wood, Vinyl',
-      false,
-      'Central Air',
-      false,
-      'New wooden deck'
-    ),
-    interiorInfoCreate(
-      6,
-      2,
-      2,
-      'Marble counters, Wood cabinets',
-      'Wood',
-      false,
-      false,
-      false,
-      false
-    ),
-    interiorInfoCreate(
-      7,
-      4,
-      4,
-      'Kitchen island, Marble counters, Double sinks, Double ovens, Wine cabinet',
-      'Wood, Stone',
-      'Forced Air',
-      'Central Air',
-      'Premium imported italian appliances',
-      'Pool, Hot tub, Built-in BBQ'
-    ),
-  ]);
-}
-
-async function createPropertyInfos() {
-  console.log('Adding property infos');
-
-  await Promise.all([
-    propertyInfoCreate(
-      0,
-      3,
-      '2000 sqft',
-      'Single Family',
-      2003,
-      {
-        sewer: 'Public',
-        water: 'Public',
-      },
-      'Gazebo, Patio'
-    ),
-    propertyInfoCreate(
-      1,
-      1,
-      '1200 sqft',
-      'Condo',
-      1999,
-      {
-        sewer: 'Public',
-        water: 'Public',
-      },
-      false
-    ),
-    propertyInfoCreate(
-      2,
-      2,
-      '1800 sqft',
-      'Single Family',
-      2003,
-      {
-        sewer: 'Public',
-        water: 'Public',
-      },
-      'Hot tub'
-    ),
-    propertyInfoCreate(
-      3,
-      4,
-      '2400 sqft',
-      'Single Family',
-      2013,
-      {
-        sewer: 'Public',
-        water: 'Public',
-      },
-      'Patio, Deck, Hot Tub, Pool, Fire pit'
-    ),
-    propertyInfoCreate(
-      4,
-      1,
-      '1200 sqft',
-      'Single Family',
-      2000,
-      {
-        sewer: 'Septic',
-        water: 'Well',
-      },
-      false
-    ),
-    propertyInfoCreate(
-      5,
-      2,
-      '1500 sqft',
-      'Townhome',
-      2017,
-      {
-        sewer: 'Septic',
-        water: 'Public',
-      },
-      'Fire pit, Sauna'
-    ),
-    propertyInfoCreate(
-      6,
-      1,
-      '1500 sqft',
-      'Townhome',
-      1996,
-      {
-        sewer: 'Septic',
-        water: 'Well',
-      },
-      false
-    ),
-    propertyInfoCreate(
-      7,
-      5,
-      '2800 sqft',
-      'Single Family',
-      2020,
-      {
-        sewer: 'Public',
-        water: 'Public',
-      },
-      'Deck, River access'
-    ),
-  ]);
-}
-
-async function createCommunityInfos() {
-  console.log('Adding community infos');
-
-  await Promise.all([
-    communityInfoCreate(0, 'Biking, Curbs, Hiking, Street lights', 'Irvine'),
-    communityInfoCreate(1, 'Park, Street lights', 'Irvine'),
-    communityInfoCreate(
-      2,
-      'Biking, Curbs, Hiking, Street lights, Park',
-      'Irvine'
-    ),
-    communityInfoCreate(3, 'Lake, Fishing, Street lights', 'Aliso Viejo'),
-    communityInfoCreate(4, 'Biking, Curbs, Park, Street lights', 'Irvine'),
-    communityInfoCreate(5, 'Street lights', 'Costa Mesa'),
-    communityInfoCreate(6, 'Biking, Curbs, Hiking', 'Costa Mesa'),
-    communityInfoCreate(7, 'Hiking, Street lights', 'Lake Forest'),
-  ]);
-}
-
 async function createHomes() {
   console.log('Adding Homes');
+  const interiorInfos = [
+    {
+      bedrooms: 3,
+      bathrooms: 3,
+      kitchen: 'Kitchen island, Granite counters',
+      flooring: 'Wood, Vinyl',
+      heating: 'Forced air',
+      cooling: 'Central air',
+      applicances: false,
+      other_features: false,
+    },
+    {
+      bedrooms: 2,
+      bathrooms: 1,
+      kitchen: 'Stone counters, Double sinks',
+      flooring: 'Vinyl',
+      heating: 'Wood stove',
+      cooling: 'Wall unit',
+      appliances: false,
+      other_features: false,
+    },
+    {
+      bedrooms: 3,
+      bathrooms: 3,
+      kitchen: 'Kitchen island, Stone counters, Soft-close cabinets',
+      flooring: 'Wood, Vinyl, Stone',
+      heating: 'Forced Air',
+      cooling: 'Central Air',
+      appliances: 'Stainless steel refrigerator, Oven, Dishwasher',
+      other_features: 'Hot tub, Putting green',
+    },
+    {
+      bedrooms: 4,
+      bathrooms: 3,
+      kitchen: 'Granite counters, Double ovens',
+      flooring: 'Wood laminate',
+      heating: 'Forced Air',
+      cooling: 'Central Air',
+      appliances: 'Stainless steel appliances',
+      other_features: 'New water heater',
+    },
+    {
+      bedrooms: 2,
+      bathrooms: 1,
+      kitchen: 'Stone counters, Wood cabinets',
+      flooring: 'Wood laminate',
+      heating: 'Fireplace',
+      cooling: 'Central Air',
+      appliances: false,
+      other_features: false,
+    },
+    {
+      bedrooms: 3,
+      bathrooms: 1,
+      kitchen: 'Kitchen Island',
+      flooring: 'Wood, Vinyl',
+      heating: false,
+      cooling: 'Central Air',
+      appliances: false,
+      other_features: 'New wooden deck',
+    },
+    {
+      bedrooms: 2,
+      bathrooms: 2,
+      kitchen: 'Marble counters, Wood cabinets',
+      flooring: 'Wood',
+      heating: false,
+      cooling: false,
+      appliances: false,
+      other_features: false,
+    },
+    {
+      bedrooms: 4,
+      bathrooms: 4,
+      kitchen: 'Island, Marble counters, Double ovens, Wine cabinet',
+      flooring: 'Wood, Stone',
+      heating: 'Forced Air',
+      cooling: 'Central Air',
+      appliances: 'Premium imported italian appliances',
+      other_features: false,
+    },
+  ];
+  const propertyInfos = [
+    {
+      parking: 3,
+      lot_size: '2000 sqft',
+      construction_type: 'Single Family',
+      year_built: 2003,
+      utilities: {
+        sewer: 'Public',
+        water: 'Public',
+      },
+      other_features: 'Gazebo, Patio',
+    },
+    {
+      parking: 1,
+      lot_size: '1200 sqft',
+      construction_type: 'Condo',
+      year_built: 1999,
+      utilities: {
+        sewer: 'Public',
+        water: 'Public',
+      },
+      other_features: false,
+    },
+    {
+      parking: 2,
+      lot_size: '1800 sqft',
+      construction_type: 'Single Family',
+      year_built: 2003,
+      utilities: {
+        sewer: 'Public',
+        water: 'Public',
+      },
+      other_features: 'Hot tub',
+    },
+    {
+      parking: 4,
+      lot_size: '2400 sqft',
+      construction_type: 'Single Family',
+      year_built: 2013,
+      utilities: {
+        sewer: 'Public',
+        water: 'Public',
+      },
+      other_features: 'Patio, Deck, Hot Tub, Pool, Fire pit',
+    },
+    {
+      parking: 1,
+      lot_size: '1200 sqft',
+      construction_type: 'Single Family',
+      year_built: 2000,
+      utilities: {
+        sewer: 'Septic',
+        water: 'Well',
+      },
+      other_features: false,
+    },
+    {
+      parking: 2,
+      lot_size: '1500 sqft',
+      construction_type: 'Townhome',
+      year_built: 2017,
+      utilities: {
+        sewer: 'Septic',
+        water: 'Public',
+      },
+      other_features: 'Fire pit, Sauna',
+    },
+    {
+      parking: 1,
+      lot_size: '1500 sqft',
+      construction_type: 'Townhome',
+      year_built: 1996,
+      utilities: {
+        sewer: 'Septic',
+        water: 'Well',
+      },
+      other_features: false,
+    },
+    {
+      parking: 5,
+      lot_size: '2800 sqft',
+      construction_type: 'Single Family',
+      year_built: 2020,
+      utilities: {
+        sewer: 'Public',
+        water: 'Public',
+      },
+      other_features: 'Deck, River access',
+    },
+  ];
+  const communityInfos = [
+    {
+      community_features: 'Biking, Curbs, Hiking, Street lights',
+      region: 'Irvine',
+    },
+    {
+      community_features: 'Park, Street lights',
+      region: 'Irvine',
+    },
+    {
+      community_features: 'Biking, Curbs, Hiking, Street lights, Park',
+      region: 'Irvine',
+    },
+    {
+      community_features: 'Lake, Fishing, Street lights',
+      region: 'Aliso Viejo',
+    },
+    {
+      community_features: 'Biking, Curbs, Park, Street lights',
+      region: 'Irvine',
+    },
+    {
+      community_features: 'Street lights',
+      region: 'Costa Mesa',
+    },
+    {
+      community_features: 'Biking, Curbs, Hiking',
+      region: 'Costa Mesa',
+    },
+    {
+      community_features: 'Hiking, Street lights',
+      region: 'Lake Forest',
+    },
+  ];
 
   await Promise.all([
     homeCreate(
