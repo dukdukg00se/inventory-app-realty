@@ -12,19 +12,59 @@ const HomeSchema = new Schema({
     required: true,
   },
   interior_info: {
-    type: Schema.Types.ObjectId,
-    ref: 'InteriorInfo',
-    required: true,
+    bedrooms: {
+      type: Number,
+      MaxLength: 100,
+      required: true,
+    },
+    bathrooms: {
+      type: Number,
+      MaxLength: 100,
+      required: true,
+    },
+    kitchen: {
+      type: String,
+      required: true,
+    },
+    flooring: {
+      type: String,
+      required: true,
+    },
+    heating: String,
+    cooling: String,
+    appliances: String,
+    other_features: String,
   },
   property_info: {
-    type: Schema.Types.ObjectId,
-    ref: 'PropertyInfo',
-    required: true,
+    parking: {
+      type: Number,
+      MaxLength: 100,
+      required: true,
+    },
+    lot_size: {
+      type: String,
+      required: true,
+    },
+    construction_type: {
+      type: String,
+      required: true,
+    },
+    year_built: {
+      type: Number,
+      required: true,
+    },
+    utilities: {
+      sewer: { type: String, required: true },
+      water: { type: String, required: true },
+    },
+    other_features: String,
   },
   community_info: {
-    type: Schema.Types.ObjectId,
-    ref: 'CommunityInfo',
-    required: true,
+    community_features: String,
+    region: {
+      type: String,
+      required: true,
+    },
   },
 });
 
