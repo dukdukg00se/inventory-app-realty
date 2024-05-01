@@ -16,14 +16,14 @@
               <li>
                 <div>
                   <a href="<%=account.url%>"><strong>Account ID: </strong><%=account._id%></a>
-                  <p><strong>Name: </strong><%=account.user.first_name%> <%=account.user.last_name%></p>
-                  <p><strong>Type: </strong><%=account.type%></p>
-                  <p><strong>Customer since: </strong><%=account.created_on_formatted%></p>
+                  <p><strong>-- Account Users --</strong></p>
+                  <% account.users.forEach(user => { %>
+                    <p><strong>Name: </strong><%=user.first_name%> <%=user.last_name%></p>
+                  <% }) %>
                 </div>
               </li>
             <% }) %>
           </ul>
-
           <% } else { %>
             <p>There are no accounts.</p>
           <% } %>

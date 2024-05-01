@@ -8,23 +8,25 @@
 
         <main>
           <h1><%=title%></h1>
+          <p><strong>Type: </strong><%=account.type%></p>
+          <p><strong>Account ID: </strong><%=account._id%></p>
+          <p>
+            <strong>Created On: </strong><%=account.created_on_formatted%>
+          </p>
 
           <section>
-            <h2>Customer Information:</h2>
+            <h2>Linked Users:</h2>
+
+            <% account.users.forEach(user => { %>
             <p>
-              <strong>Name: </strong><%=account.user.first_name%>
-              <%=account.user.last_name%>
+              <strong>Name: </strong><a href="<%=user.url%>">
+              <%=user.first_name%> <%=user.last_name%></a>
             </p>
-            <p><strong>Type: </strong><%=account.type%></p>
-            <p><strong>ID: </strong><%=account._id%></p>
-            <p><strong>Email: </strong><%=account.user.email%></p>
-            <p>
-              <strong>Created On: </strong><%=account.created_on_formatted%>
-            </p>
+            <% }) %>
           </section>
           <hr />
           <section>
-            <h2>Customer Homes</h2>
+            <h2>Account Saved Homes</h2>
 
             <% if (account.homes.length) { %>
               <% account.homes.forEach(home => { %>

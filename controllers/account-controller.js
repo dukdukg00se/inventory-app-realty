@@ -3,6 +3,7 @@ const Home = require('../models/home');
 const User = require('../models/user');
 
 const asyncHandler = require('express-async-handler');
+const { body, validationResult } = require('express-validator');
 
 const accountPath = './pages/admin/account';
 
@@ -24,9 +25,9 @@ exports.index = asyncHandler(async (req, res, next) => {
 
 // Display list of Accounts
 exports.account_list = asyncHandler(async (req, res, next) => {
-  const allAccounts = await Account.find({}, 'type user created_on')
+  const allAccounts = await Account.find({}, 'user')
     .sort({ type: 1 })
-    .populate('user')
+    .populate('users')
     .exec();
 
   res.render(`${accountPath}/account-list`, {
@@ -38,7 +39,10 @@ exports.account_list = asyncHandler(async (req, res, next) => {
 // Display detail page for a specific Account
 exports.account_detail = asyncHandler(async (req, res, next) => {
   const account = await Account.findById(req.params.id)
-    .populate('user')
+    .populate({
+      path: 'users',
+      select: 'first_name last_name',
+    })
     .populate('homes')
     .exec();
 
