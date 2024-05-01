@@ -107,10 +107,10 @@ async function homeCreate(
   console.log(`Added home: ${address}`);
 }
 
-async function accountCreate(index, type, user, homes, created) {
+async function accountCreate(index, type, users, homes, created) {
   const accountDetail = {
     type: type,
-    user: user,
+    users: users,
   };
 
   if (homes != false) accountDetail.homes = homes;
@@ -419,13 +419,19 @@ async function createAccounts() {
     accountCreate(
       0,
       'White Glove',
-      users[0],
+      [users[0]],
       [homes[0], homes[1], homes[2]],
       false
     ),
-    accountCreate(1, 'Basic', users[1], false, false),
-    accountCreate(2, 'Basic', users[2], [homes[3]], false),
-    accountCreate(3, 'Guided', users[3], [homes[4], homes[5]], false),
-    accountCreate(4, 'Basic', users[4], [homes[1], homes[6], homes[7]], false),
+    accountCreate(1, 'Basic', [users[1]], false, false),
+    accountCreate(2, 'Basic', [users[2]], [homes[3]], false),
+    accountCreate(3, 'Guided', [users[3]], [homes[4], homes[5]], false),
+    accountCreate(
+      4,
+      'Basic',
+      [users[4]],
+      [homes[1], homes[6], homes[7]],
+      false
+    ),
   ]);
 }
