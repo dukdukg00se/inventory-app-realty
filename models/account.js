@@ -8,11 +8,13 @@ const AccountSchema = new Schema({
     default: 'Basic',
     required: true,
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
+  users: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+  ],
   homes: [
     {
       type: Schema.Types.ObjectId,
