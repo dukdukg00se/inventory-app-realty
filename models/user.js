@@ -4,13 +4,15 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   first_name: {
     type: String,
-    MaxLength: 100,
-    required: [true, 'Why no first name?'],
+    minLength: [3, 'First name too short'],
+    maxLength: 100,
+    required: true,
   },
   last_name: {
     type: String,
-    MaxLength: 100,
-    required: [true, 'Why no last name?'],
+    minLength: [3, 'Last name too short'],
+    maxLength: 100,
+    required: true,
   },
   email: {
     type: String,
@@ -20,7 +22,7 @@ const UserSchema = new Schema({
 
 // Virtual for user URL
 UserSchema.virtual('url').get(function () {
-  return `/user/${this.id}`;
+  return `/admin/user/${this.id}`;
 });
 
 // Export model
