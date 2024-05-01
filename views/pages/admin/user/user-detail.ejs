@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <%- include('../../../partials/head.ejs') %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <%- include('../../../partials/sidebar.ejs') %>
+
+        <main>
+          <h1><%=title%></h1>
+
+          <p><strong>Name: </strong><%=user.first_name%> <%=user.last_name%></p>
+          <p><strong>Email: </strong><%=user.email%></p>
+          <p><strong>Account Type: </strong><%=user_account.type%></p>
+          <a href="<%=user_account.url%>"
+            ><strong>Account ID: </strong><%=user_account._id%></a
+          >
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
