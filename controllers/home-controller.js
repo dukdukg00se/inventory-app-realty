@@ -1,6 +1,8 @@
 const Home = require('../models/home');
+const Account = require('../models/account');
 const asyncHandler = require('express-async-handler');
 
+const homePath = './pages/admin/home';
 // Display list of all homes.
 exports.home_list = asyncHandler(async (req, res, next) => {
   const allHomes = await Home.find(
@@ -10,7 +12,7 @@ exports.home_list = asyncHandler(async (req, res, next) => {
     .sort({ price: 1 })
     .exec();
 
-  res.render('./pages/admin/home/home-list', {
+  res.render(`${homePath}/home-list`, {
     title: 'Homes List',
     homes_list: allHomes,
   });
@@ -18,7 +20,18 @@ exports.home_list = asyncHandler(async (req, res, next) => {
 
 // Display detail page for a specific home.
 exports.home_detail = asyncHandler(async (req, res, next) => {
-  res.send(`NOT IMPLEMENTED: home detail: ${req.params.id}`);
+  // res.send(`NOT IMPLEMENTED: home detail: ${req.params.id}`);
+
+  const [home, allAccounts] = await Promise.all([
+    Home.findById(req.params.id).exec(),
+    Account.find({ homes: req.params.id }, '_id').exec(),
+  ]);
+
+  res.render(`${homePath}/home-detail`, {
+    title: 'Home Details',
+    home: home,
+    accounts_list: allAccounts,
+  });
 });
 
 // Display home create form on GET.

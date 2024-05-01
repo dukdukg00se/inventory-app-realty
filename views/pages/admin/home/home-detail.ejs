@@ -8,6 +8,76 @@
 
         <main>
           <h1><%=title%></h1>
+
+          <section>
+            <h3>Key Information</h3>
+            <p><strong>Address: </strong><%=home.address%></p>
+            <p><strong>Price: </strong>$<%=home.price%></p>
+            <p><strong>Size: </strong><%=home.property_info.lot_size%></p>
+          </section>
+          <hr />
+          <section>
+            <h3>Facts & Features</h3>
+            <div class="facts-section">
+              <h4 class="facts-section-subheading">Interior</h4>
+              <p><strong>Bedrooms: </strong><%=home.interior_info.bedrooms%></p>
+              <p>
+                <strong>Bathrooms: </strong><%=home.interior_info.bathrooms%>
+              </p>
+              <p><strong>Kitchen: </strong><%=home.interior_info.kitchen%></p>
+              <p><strong>Flooring: </strong><%=home.interior_info.flooring%></p>
+              <p><strong>Heating: </strong><%=home.interior_info.heating%></p>
+              <p><strong>Cooling: </strong><%=home.interior_info.cooling%></p>
+            </div>
+            <div class="facts-section">
+              <h4 class="facts-section-subheading">Property</h4>
+              <p><strong>Utilities</strong></p>
+              <div class="utilities-section">
+                <p>
+                  <strong>Sewer: </strong
+                  ><%=home.property_info.utilities.sewer%>
+                </p>
+                <p>
+                  <strong>Water: </strong
+                  ><%=home.property_info.utilities.water%>
+                </p>
+              </div>
+
+              <p>
+                <strong>Parking Spaces: </strong><%=home.property_info.parking%>
+              </p>
+              <p>
+                <strong>Construction Type: </strong
+                ><%=home.property_info.construction_type%>
+              </p>
+              <p>
+                <strong>Year Built: </strong><%=home.property_info.year_built%>
+              </p>
+            </div>
+            <div class="facts-section">
+              <h4 class="facts-section-subheading">Community</h4>
+              <p>
+                <strong>Community Features: </strong
+                ><%=home.community_info.community_features%>
+              </p>
+              <p><strong>Region: </strong><%=home.community_info.region%></p>
+            </div>
+          </section>
+          <hr />
+          <section>
+            <% if (accounts_list.length) { %>
+              <h3>Associated Accounts:</h3>
+              <ul>
+                <% accounts_list.forEach(account => { %>
+                  <li>
+                    <a href="<%=account.url%>"><strong>Account ID: </strong><%=account._id%></a>
+                  </li>
+                <% }) %>
+              </ul>
+            <% } else { %>
+              <p>No accounts associated with this home.</p>
+            <% } %>
+          </section>
         </main>
       </div>
     </div>
