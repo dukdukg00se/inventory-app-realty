@@ -44,8 +44,30 @@
                 value="<%=typeof user === 'undefined' ? '' : user.email%>"
               />
             </div>
+            <div class="form-group">
+              <label for="account">Corresponding Account:</label>
+              <select id="account" name="account" class="form-control" required>
+                <option value="">--Please select an account--</option>
+                <% accounts_list.forEach(account => { %>
+                  <% if (typeof user !== 'undefined') { %>
+                    <% if (account._id == associated_account_id) { %>
+                      <option value="<%=account._id%>" selected><%=account._id%></option>
+                    <% } else { %>
+                      <option value="<%=account._id%>"><%=account._id%></option>
+                    <% } %>
+
+                  <% } else { %>
+                      <option value="<%=account._id%>"><%=account._id%></option>
+                  <% } %>
+                <% }) %>
+
+              </select>
+            </div>
+
             <button type="submit">Submit</button>
           </form>
+
+          <%- include('../../../partials/errors.ejs') %>
         </main>
       </div>
     </div>
