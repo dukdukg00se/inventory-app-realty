@@ -28,6 +28,8 @@
               <p><strong>Flooring: </strong><%=home.interior_info.flooring%></p>
               <p><strong>Heating: </strong><%=home.interior_info.heating%></p>
               <p><strong>Cooling: </strong><%=home.interior_info.cooling%></p>
+              <p><strong>Appliances: </strong><%=home.interior_info.appliances%></p>
+              <p><strong>Other: </strong><%=home.interior_info.other_features%></p>
             </div>
             <div class="facts-section">
               <h4 class="facts-section-subheading">Property</h4>
@@ -50,6 +52,11 @@
                 <strong>Construction Type: </strong
                 ><%=home.property_info.construction_type%>
               </p>
+
+              <p>
+                <strong>Other: </strong><%=home.property_info.other_features%>
+              </p>
+
               <p>
                 <strong>Year Built: </strong><%=home.property_info.year_built%>
               </p>
@@ -77,6 +84,13 @@
             <% } else { %>
               <p>No accounts associated with this home.</p>
             <% } %>
+          </section>
+          <section>
+            <hr/>
+                <p>
+                  <a href="<%=home.url%>/delete">Delete&nbsp;Home</a> |
+                  <a href="<%=home.url%>/update">Update&nbsp;Home</a>
+                </p>
           </section>
         </main>
       </div>

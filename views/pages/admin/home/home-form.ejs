@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+  <%- include('../../../partials/head.ejs') %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <%- include('../../../partials/sidebar.ejs') %>
+
+        <main>
+          <h1><%=title%></h1>
+          <h2>Enter home information:</h2>
+          <form method="post">
+            <h3>Top Level-</h3>
+            <div class="form-group">
+              <label for="address">Address:</label>
+              <input
+                id="address"
+                name="address"
+                class="form-control"
+                type="text"
+                placeholder="123 Mulberry Ave, Any Town, CA"
+                value="<%= typeof home === 'undefined' ? '' : home.address%>"
+                required
+              />
+              <label for="price">Price ($):</label>
+              <input
+                id="price"
+                name="price"
+                class="form-control"
+                type="text"
+                placeholder="1,000,000"
+                value="<%= typeof home === 'undefined' ? '' : home.price%>"
+                required
+              />
+            </div>
+
+            <h3>Interior Features-</h3>
+            <div class="form-group">
+              <label for="bedrooms">Bedrooms:</label>
+              <input
+                id="bedrooms"
+                name="bedrooms"
+                class="form-control"
+                type="number"
+                min="0"
+                max="100"
+                placeholder="1"
+                value="<%= typeof home === 'undefined' ? '' : home.interior_info.bedrooms %>"
+                required
+              />
+              <label for="bathrooms">Bathrooms:</label>
+              <input
+                id="bathrooms"
+                name="bathrooms"
+                class="form-control"
+                type="number"
+                min="0"
+                max="100"
+                placeholder="1"
+                value="<%= typeof home === 'undefined' ? '' : home.interior_info.bathrooms %>"
+                required
+              />
+              <label for="kitchen">Kitchen Features:</label>
+              <input
+                id="kitchen"
+                name="kitchen"
+                class="form-control"
+                type="text"
+                placeholder="Stone counters, Wood cabinets"
+                value="<%= typeof home === 'undefined' ? '' : home.interior_info.kitchen %>"
+              />
+              <label for="flooring">Flooring:</label>
+              <input
+                id="flooring"
+                name="flooring"
+                class="form-control"
+                type="text"
+                placeholder="Wood laminate, Carpet"
+                value="<%= typeof home === 'undefined' ? '' : home.interior_info.flooring %>"
+              />
+              <label for="heating">Heating:</label>
+              <input
+                id="heating"
+                name="heating"
+                class="form-control"
+                type="text"
+                placeholder="Forced air"
+                value="<%= typeof home === 'undefined' ? '' : home.interior_info.heating %>"
+              />
+              <label for="cooling">Cooling:</label>
+              <input
+                id="cooling"
+                name="cooling"
+                class="form-control"
+                type="text"
+                placeholder="Central air"
+                value="<%= typeof home === 'undefined' ? '' : home.interior_info.cooling %>"
+              />
+              <label for="appliances">Appliances:</label>
+              <input
+                id="appliances"
+                name="appliances"
+                class="form-control"
+                type="text"
+                placeholder="Stainless steel appliances"
+                value="<%= typeof home === 'undefined' ? '' : home.interior_info.appliances %>"
+              />
+              <label for="interior-other">Other Features:</label>
+              <input
+                id="interior-other"
+                name="interior_other"
+                class="form-control"
+                type="text"
+                placeholder="New water heater"
+                value="<%= typeof home === 'undefined' ? '' : home.interior_info.other_features %>"
+              />
+            </div>
+
+            <h3>Property Features-</h3>
+            <div class="form-group">
+              <label for="sewer">Sewer:</label>
+              <input
+                id="sewer"
+                name="sewer"
+                class="form-control"
+                type="text"
+                placeholder="Septic"
+                value="<%= typeof home === 'undefined' ? '' : home.property_info.utilities.sewer %>"
+                required
+              />
+              <label for="water">Water:</label>
+              <input
+                id="water"
+                name="water"
+                class="form-control"
+                type="text"
+                placeholder="Well"
+                value="<%= typeof home === 'undefined' ? '' : home.property_info.utilities.water %>"
+                required
+              />
+
+              <label for="parking">Parking:</label>
+              <input
+                id="parking"
+                name="parking"
+                class="form-control"
+                type="number"
+                placeholder="1"
+                value="<%= typeof home === 'undefined' ? '' : home.property_info.parking %>"
+                required
+              />
+              <label for="lot">Lot Size:</label>
+              <input
+                id="lot"
+                name="lot"
+                class="form-control"
+                type="text"
+                placeholder="1000 sqft"
+                value="<%= typeof home === 'undefined' ? '' : home.property_info.lot_size %>"
+              />
+              <label for="construction">Construction Type:</label>
+              <input
+                id="construction"
+                name="construction"
+                class="form-control"
+                type="text"
+                placeholder="Single Family"
+                value="<%= typeof home === 'undefined' ? '' : home.property_info.construction_type %>"
+              />
+
+              <label for="prop-other">Other Features:</label>
+              <input
+                id="prop-other"
+                name="prop_other"
+                class="form-control"
+                type="text"
+                placeholder="Hot Tub"
+                value="<%= typeof home === 'undefined' ? '' : home.property_info.other_features %>"
+              />
+              <label for="yr-built">Year Built:</label>
+              <input
+                id="yr-built"
+                name="year_built"
+                class="form-control"
+                type="number"
+                step="1"
+                placeholder="2013"
+                min="1700"
+                max="<%=new Date(Date.now()).getFullYear()%>"
+                value="<%= typeof home === 'undefined' ? '' : home.property_info.year_built %>"
+              />
+            </div>
+
+            <h3>Community Features-</h3>
+            <div class="form-group">
+              <label for="community">Community Features:</label>
+              <input
+                id="community"
+                name="community"
+                class="form-control"
+                type="text"
+                placeholder="Sidewalks, Parks"
+                value="<%= typeof home === 'undefined' ? '' : home.community_info.community_features %>"
+                required
+              />
+
+              <label for="region">Region:</label>
+              <input
+                id="region"
+                name="region"
+                class="form-control"
+                type="text"
+                placeholder="Irvine"
+                value="<%= typeof home === 'undefined' ? '' : home.community_info.region %>"
+                required
+              />
+            </div>
+
+            <button type="submit">Submit</button>
+          </form>
+
+          <%- include('../../../partials/errors.ejs') %>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

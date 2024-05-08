@@ -15,10 +15,15 @@
                 <a href="<%=home.url%>"><%=home.address%></a>
                 <h4>$<%=home.price%></h4>
                 <p><%=home.interior_info.bedrooms%> bds | <%=home.interior_info.bathrooms%> bths | <%=home.property_info.lot_size%></p>
+                <hr/>
+                <p>
+                  <a href="<%=home.url%>/delete">Delete&nbsp;Home</a> |
+                  <a href="<%=home.url%>/update">Update&nbsp;Home</a>
+                </p>
               </div>
             <% }) %>
           <% } else { %>
-            <p>No saved homes yet.</p>
+            <p>No homes in database.</p>
           <% } %>
         </main>
       </div>

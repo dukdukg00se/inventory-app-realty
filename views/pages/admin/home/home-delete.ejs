@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <%- include('../../../partials/head.ejs') %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <%- include('../../../partials/sidebar.ejs') %>
+
+        <main>
+          <h1><%=title%></h1>
+
+          <section>
+            <% if (accounts.length) { %>
+              <h3>Warning! Deleting this home will remove it from the following accounts:</h3>
+              <ul>
+                <% accounts.forEach(account => { %>
+                  <li><a href="<%=account.url%>"><strong>Account ID: </strong> <%=account._id%></a></li>
+                <% }) %>
+              </ul>
+            <% } %>
+          </section>
+
+          <section>
+            <h3>Do you really want to delete this home?</h3>
+            <p><strong>Address: </strong><%=home.address%></p>
+            <p><strong>Price: </strong>$<%=home.price%></p>
+            <p><strong>Size: </strong><%=home.property_info.lot_size%></p>
+
+            <form method="post">
+              <input id="homeid" name="homeid" type="hidden" value="<%=home._id%>" />
+              <button type="submit">Delete</button>
+            </form>
+          </section>
+
+
+          <%- include('../../../partials/errors.ejs') %>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
