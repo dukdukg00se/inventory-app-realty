@@ -74,8 +74,7 @@ async function homeCreate(
   if (interior_info.appliances != false)
     interiorInfoDetails.appliances = interior_info.appliances;
   if (interior_info.other_features != false)
-    interiorInfoDetails.other_features =
-      interior_info.appliances.other_features;
+    interiorInfoDetails.other_features = interior_info.other_features;
 
   const propertyInfoDetails = {
     parking: property_info.parking,
