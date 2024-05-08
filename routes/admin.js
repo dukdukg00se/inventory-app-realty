@@ -56,7 +56,7 @@ router.post('/user/create', user_controller.user_create_post);
 
 router.get('/user/:id/delete', user_controller.user_delete_get);
 
-router.post('/user/id/delete', user_controller.user_delete_post);
+router.post('/user/:id/delete', user_controller.user_delete_post);
 
 router.get('/user/:id/update', user_controller.user_update_get);
 
