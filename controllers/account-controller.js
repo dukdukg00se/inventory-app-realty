@@ -60,14 +60,60 @@ exports.account_detail = asyncHandler(async (req, res, next) => {
 });
 
 // Display Account create form on GET
-exports.account_create_get = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Account create GET');
-});
+exports.account_create_get = (req, res, next) => {
+  res.render(`${accountPath}/account-form`, {
+    title: 'Create New Account',
+  });
+};
 
 // Handle Account create on POST
-exports.account_create_post = asyncHandler(async (req, res, next) => {
-  res.send('NOT IMPLEMENTED: Account create POST');
-});
+exports.account_create_post = [
+  body('first_name')
+    .trim()
+    .isLength({ min: 2, max: 100 })
+    .escape()
+    .withMessage('First name length must be between 2 and 100.')
+    .isAlphanumeric()
+    .withMessage('First name must be alphanumeric.'),
+  body('last_name')
+    .trim()
+    .isLength({ min: 2, max: 100 })
+    .escape()
+    .withMessage('Last name length must be between 2 and 100.')
+    .isAlphanumeric()
+    .withMessage('Last name must be alphanumeric.'),
+  body('email', 'Must be a valid email').trim().escape().isEmail(),
+  body('account', 'Check account field.').trim().escape().notEmpty(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const newUser = new User({
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+    });
+
+    const newAccount = new Account({
+      type: req.body.account,
+      users: newUser._id,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render(`${accountPath}/account-form`, {
+        title: 'Create New Account',
+        account: newAccount,
+        user: newUser,
+        errors: errors.array(),
+      });
+    } else {
+      await newUser.save();
+      await newAccount.save();
+
+      res.redirect(newAccount.url);
+    }
+  }),
+];
 
 // Display Account delete form on GET
 exports.account_delete_get = asyncHandler(async (req, res, next) => {
