@@ -19,7 +19,7 @@ exports.user_list = asyncHandler(async (req, res, next) => {
 exports.user_detail = asyncHandler(async (req, res, next) => {
   const [user, userAccount] = await Promise.all([
     User.findById(req.params.id).exec(),
-    Account.findOne({ users: req.params.id }, 'type').exec(),
+    Account.findOne({ users: req.params.id }, '_id').exec(),
   ]);
 
   if (user === null) {
@@ -36,11 +36,14 @@ exports.user_detail = asyncHandler(async (req, res, next) => {
 });
 
 // Display user create form on GET.
-exports.user_create_get = (req, res, next) => {
+exports.user_create_get = asyncHandler(async (req, res, next) => {
+  const allAccounts = await Account.find({}, '_id').sort({ _id: 1 }).exec();
+
   res.render(`${userPath}/user-form`, {
     title: 'Create New User',
+    accounts_list: allAccounts,
   });
-};
+});
 
 // Handle user create on POST.
 exports.user_create_post = [
@@ -50,15 +53,16 @@ exports.user_create_post = [
     .escape()
     .withMessage('First name must be at least 2 characters.')
     .isAlphanumeric()
-    .withMessage('Name has non-alphanumeric characters.'),
+    .withMessage('First name must contain only letters and numbers.'),
   body('last_name')
     .trim()
     .isLength({ min: 2 })
     .escape()
     .withMessage('Last name must be at least 2 characters.')
     .isAlphanumeric()
-    .withMessage('Name has non-alphanumeric characters.'),
-  body('email', 'Please submit a valid email.').trim().escape().isEmail(),
+    .withMessage('Last name must contain only letters and numbers.'),
+  body('email').trim().escape().isEmail(),
+  body('account').trim().escape(),
 
   asyncHandler(async (req, res, next) => {
     // Extract validation errors from request
@@ -73,20 +77,27 @@ exports.user_create_post = [
 
     if (!errors.isEmpty()) {
       // Errors. Render form again with sanitized values/error msgs
+      const allAccounts = await Account.find({}, '_id').sort({ _id: 1 }).exec();
+
       res.render(`${userPath}/user-form`, {
         title: 'Create New User',
         user: user,
+        accounts_list: allAccounts,
+        associated_account_id: req.body.account,
         errors: errors.array(),
       });
     } else {
       // Data from form is valid
-
       // Save user
       await user.save();
 
-      // Redirect to new user record
+      // Add user to account
+      const account = await Account.findById(req.body.account).exec();
+      account.users.push(user._id);
 
-      console.log(user);
+      await account.save();
+
+      // Redirect to new user record
       res.redirect(user.url);
     }
   }),
