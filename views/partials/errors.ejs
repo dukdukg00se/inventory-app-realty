@@ -1,7 +1,10 @@
-<% if (typeof errors !== 'undefined') { %>
-<ul>
-  <% errors.forEach(err => { %>
-  <li><%= err.msg %></li>
-  <% }) %>
-</ul>
-<% } %>
+<div class="error-msgs">
+  <% if (typeof errors !== 'undefined') { %>
+  <ul>
+    <% errors.forEach(err => { %>
+    <li><%= err.msg %></li>
+    <% }) %>
+  </ul>
+  <% } %>
+</div>
+
