@@ -4,13 +4,13 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   first_name: {
     type: String,
-    minLength: [3, 'First name too short'],
+    minLength: [2, 'First name too short'],
     maxLength: 100,
     required: true,
   },
   last_name: {
     type: String,
-    minLength: [3, 'Last name too short'],
+    minLength: [2, 'Last name too short'],
     maxLength: 100,
     required: true,
   },
