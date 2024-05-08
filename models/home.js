@@ -4,11 +4,13 @@ const Schema = mongoose.Schema;
 const HomeSchema = new Schema({
   address: {
     type: String,
-    MaxLength: 100,
+    minLength: 5,
+    maxLength: 100,
     required: true,
   },
   price: {
     type: Number,
+    min: [0, 'Check Number'],
     required: true,
   },
   interior_info: {
@@ -22,10 +24,7 @@ const HomeSchema = new Schema({
       MaxLength: 100,
       required: true,
     },
-    kitchen: {
-      type: String,
-      required: true,
-    },
+    kitchen: String,
     flooring: {
       type: String,
       required: true,
