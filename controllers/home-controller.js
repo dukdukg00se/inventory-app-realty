@@ -164,14 +164,23 @@ exports.home_delete_get = asyncHandler(async (req, res, next) => {
 
 // Handle home delete on POST.
 exports.home_delete_post = asyncHandler(async (req, res, next) => {
-  // Remove home from all accounts
-  await Account.updateMany(
-    { homes: req.body.homeid },
-    { $pull: { homes: req.body.homeid } }
-  );
+  // Remove home from all accounts and delete home concurrently
+  await Promise.all([
+    Account.updateMany(
+      { homes: req.body.homeid },
+      { $pull: { homes: req.body.homeid } }
+    ),
+    Home.findByIdAndDelete(req.body.homeid),
+  ]);
 
-  // Delete home
-  await Home.findByIdAndDelete(req.body.homeid);
+  // // Remove home from all accounts
+  // await Account.updateMany(
+  //   { homes: req.body.homeid },
+  //   { $pull: { homes: req.body.homeid } }
+  // );
+
+  // // Delete home
+  // await Home.findByIdAndDelete(req.body.homeid);
 
   res.redirect('/admin/homes');
 });
