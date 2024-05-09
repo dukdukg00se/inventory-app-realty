@@ -288,6 +288,7 @@ exports.home_update_post = [
         community_features: req.body.community,
         region: req.body.region,
       },
+      _id: req.params.id,
     });
 
     if (!errors.isEmpty()) {
@@ -297,7 +298,7 @@ exports.home_update_post = [
         errors: errors.array(),
       });
     } else {
-      const updatedHome = await Home.findByIdAndUpdate(req.params.id, home, {});
+      const updatedHome = await Home.findByIdAndUpdate(req.params.id, home);
       res.redirect(updatedHome.url);
     }
   }),
