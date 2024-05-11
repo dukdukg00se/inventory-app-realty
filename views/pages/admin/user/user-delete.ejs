@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <%- include('../../../partials/head.ejs') %>
+  <body>
+    <div class="container">
+      <div class="row">
+        <%- include('../../../partials/sidebar.ejs') %>
+
+        <main>
+          <h1><%=title%></h1>
+     
+            <% if (account.users.length > 1) { %>
+              <h3>Warning! Deleting this user will remove the user from the following account:</h3>
+              <p>
+                <a href="<%=account.url%>"><strong>Account ID: </strong> <%=account._id%></a>
+                <p><strong>User name: </strong><%=user.first_name%> <%=user.last_name%></p>
+              </p>
+              <hr/>     
+              <h3>Do you really want to delete this user?</h3>
+
+              <form method="post">
+                <input id="userid" name="userid" type="hidden" value="<%=user._id%>" />
+                <button type="submit">Delete</button>
+              </form>
+
+            <% } else { %>
+              <h3>Last user on account. Please delete account instead.</h3>
+              <a href="<%=account.url%>"><strong>Account ID: </strong><%=account._id%></a>
+            <% } %>
+          
+          <%- include('../../../partials/errors.ejs') %>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
