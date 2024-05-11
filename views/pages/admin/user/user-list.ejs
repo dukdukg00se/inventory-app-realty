@@ -17,6 +17,10 @@
                     <p><strong>Name: </strong><%=user.first_name%> <%=user.last_name%></p>
                     <a href="<%=user.url%>"><strong>User ID: </strong><%=user._id%></a>
                   </div>
+                  <p>
+                    <a href="<%=user.url%>/delete">Delete&nbsp;User</a> |
+                    <a href="<%=user.url%>/update">Update&nbsp;User</a>
+                  </p>
                 </li>
               <% }) %>
             </ul>
