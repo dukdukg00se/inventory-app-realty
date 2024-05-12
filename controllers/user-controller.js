@@ -196,7 +196,7 @@ exports.user_update_post = [
     .isAlphanumeric()
     .withMessage('Last name must contain only letters and numbers.'),
   body('email', 'Check email.').trim().escape().isEmail(),
-  body('account').trim().escape().isMongoId(),
+  body('account').trim().escape(),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
@@ -208,41 +208,29 @@ exports.user_update_post = [
       _id: req.params.id,
     });
 
-    /**
-     * All this checking for account errors prob unnecessary
-    // Account errors redirect to error page:
-    // First check if account is valid
-    if (errors.array().find((obj) => obj.path === 'account')) {
-      const err = new Error('Check account number.');
-      err.status = 400;
-      return next(err);
-    }
+    const account = await Account.findOne(
+      { users: req.params.id },
+      '_id'
+    ).exec();
 
-    // Then check if account id is in db
-    const accountExists = await Account.exists({ _id: req.body.account });
-    if (!accountExists) {
-      const err = new Error('No account found.');
-      err.status = 404;
-      return next(err);
-    }
-    */
-
-    /** CHANGE THIS */
     if (!errors.isEmpty()) {
-      const allAccounts = await Account.find(
-        { users: user._id },
-        '_id users'
-      ).exec();
-
       res.render(`${userPath}/user-form`, {
         title: 'Update User',
         user: user,
-        accounts_list: allAccounts,
-        associated_account_id: req.body.account,
+        accounts_list: [account],
+        associated_account_id: account._id,
         errors: errors.array(),
       });
     } else {
-      console.log('test');
+      if (account._id != req.body.account) {
+        const err = new Error('Account number error.');
+        err.status = 400;
+        return next(err);
+      }
+
+      const updatedUser = await User.findByIdAndUpdate(req.params.id, user);
+
+      res.redirect(updatedUser.url);
     }
   }),
 ];
