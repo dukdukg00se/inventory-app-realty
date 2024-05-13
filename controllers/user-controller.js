@@ -198,7 +198,11 @@ exports.user_update_post = [
   body('email', 'Check email.').trim().escape().isEmail(),
   body('account').trim().escape(),
 
+  body('verify_btn').trim().escape(),
+
   asyncHandler(async (req, res, next) => {
+    console.log(req.body);
+
     const errors = validationResult(req);
 
     const user = new User({
@@ -224,6 +228,13 @@ exports.user_update_post = [
     } else {
       if (account._id != req.body.account) {
         const err = new Error('Account number error.');
+        err.status = 400;
+        return next(err);
+      }
+
+      // Check if pw is correct
+      if (req.body.verify_btn != 'abcd') {
+        const err = new Error('Wrong passowrd.');
         err.status = 400;
         return next(err);
       }

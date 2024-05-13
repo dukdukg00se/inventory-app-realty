@@ -64,12 +64,20 @@
               </select>
             </div>
 
-            <button type="submit">Submit</button>
+            <button type="submit" id="verify_btn" name="verify_btn" value="">Submit</button>
+            
           </form>
 
           <%- include('../../../partials/errors.ejs') %>
         </main>
       </div>
     </div>
+    <script>
+      const btn = document.getElementById('verify_btn');
+      btn.addEventListener('click', () => {
+        const pw = prompt('Enter password');
+        btn.value = pw;
+      })
+    </script>
   </body>
 </html>
