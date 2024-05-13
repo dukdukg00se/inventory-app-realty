@@ -20,6 +20,11 @@
                   <% account.users.forEach(user => { %>
                     <p><strong>Name: </strong><%=user.first_name%> <%=user.last_name%></p>
                   <% }) %>
+                  
+                  <p>
+                    <a href="<%=account.url%>/delete">Delete&nbsp;Account</a> |
+                    <a href="<%=account.url%>/update">Update&nbsp;Account</a>
+                  </p>
                 </div>
               </li>
             <% }) %>
@@ -27,6 +32,8 @@
           <% } else { %>
             <p>There are no accounts.</p>
           <% } %>
+
+
         </main>
       </div>
     </div>
