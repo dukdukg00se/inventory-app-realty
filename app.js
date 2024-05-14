@@ -14,8 +14,8 @@ const app = express();
 // Set up mongoose connection
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
-const mongoDB =
-  'mongodb+srv://willwkhu:vxajGwoqEu1IY2Tl@cluster0.jysdyno.mongodb.net/inventory_app?retryWrites=true&w=majority&appName=Cluster0';
+
+const mongoDB = process.env.MONGODB_URI;
 
 main().catch((err) => console.log('!!!!error: ', err));
 async function main() {
