@@ -236,12 +236,12 @@ exports.user_update_post = [
       }
 
       // Check if pw is correct
-      if (req.body.verify_btn != 'abcd') {
-        debug(`Shucks, wrong password: ${req.body.verify_btn}`);
-        const err = new Error('Wrong passowrd.');
-        err.status = 400;
-        return next(err);
-      }
+      // if (req.body.verify_btn != 'abcd') {
+      //   debug(`Shucks, wrong password: ${req.body.verify_btn}`);
+      //   const err = new Error('Wrong passowrd.');
+      //   err.status = 400;
+      //   return next(err);
+      // }
 
       const updatedUser = await User.findByIdAndUpdate(req.params.id, user);
 
