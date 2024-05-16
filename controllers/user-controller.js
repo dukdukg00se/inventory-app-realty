@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Account = require('../models/account');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
+const debug = require('debug')('user');
 
 const userPath = './pages/admin/user';
 
@@ -23,6 +24,7 @@ exports.user_detail = asyncHandler(async (req, res, next) => {
   ]);
 
   if (user === null) {
+    debug(`User id not found for details`);
     const err = new Error('User not found');
     err.status = 404;
     return next(err);
@@ -111,6 +113,7 @@ exports.user_delete_get = asyncHandler(async (req, res, next) => {
   ]);
 
   if (user === null) {
+    debug(`User id not found for delete`);
     const err = new Error('User not found.');
     err.status = 404;
     return next(err);
@@ -166,6 +169,7 @@ exports.user_update_get = asyncHandler(async (req, res, next) => {
   ]);
 
   if (user === null) {
+    debug(`User id not found for update`);
     const err = new Error('User not found');
     err.status = 404;
     return next(err);
@@ -201,8 +205,6 @@ exports.user_update_post = [
   body('verify_btn').trim().escape(),
 
   asyncHandler(async (req, res, next) => {
-    console.log(req.body);
-
     const errors = validationResult(req);
 
     const user = new User({
@@ -227,6 +229,7 @@ exports.user_update_post = [
       });
     } else {
       if (account._id != req.body.account) {
+        debug(`Account id not found for update: ${account._id}`);
         const err = new Error('Account number error.');
         err.status = 400;
         return next(err);
@@ -234,6 +237,7 @@ exports.user_update_post = [
 
       // Check if pw is correct
       if (req.body.verify_btn != 'abcd') {
+        debug(`Shucks, wrong password: ${req.body.verify_btn}`);
         const err = new Error('Wrong passowrd.');
         err.status = 400;
         return next(err);
