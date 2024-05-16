@@ -8,10 +8,25 @@ const indexRouter = require('./routes/index');
 const housesRouter = require('./routes/houses');
 const adminRouter = require('./routes/admin');
 
+// Package to compress HTTP responses
 const compression = require('compression');
+// Package to set HTTP response headers
+const helmet = require('helmet');
 
 // Declare Express application object
 const app = express();
+
+// Set up rate limiter: max 20 requests/min
+const RateLimit = require('express-rate-limit');
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 20,
+});
+// Apply rate limiter to all requests
+app.use(limiter);
+
+// Add Helmet to middleware chain
+app.use(helmet());
 
 // Set up mongoose connection
 const mongoose = require('mongoose');
