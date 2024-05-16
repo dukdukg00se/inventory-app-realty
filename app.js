@@ -8,6 +8,8 @@ const indexRouter = require('./routes/index');
 const housesRouter = require('./routes/houses');
 const adminRouter = require('./routes/admin');
 
+const compression = require('compression');
+
 // Declare Express application object
 const app = express();
 
@@ -30,6 +32,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Compress all routes
+app.use(compression());
+
+// express.static is a built-in middleware function to serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ROUTES
