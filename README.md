@@ -4,7 +4,7 @@
 
 An admin website for a fictitious Real Estate site demonstrating CRUD methods.
 
-[Live Demo](https://dukdukg00se.github.io/memory-card/)
+[Live Demo](https://ordinary-absorbing-sternum.glitch.me)
 
 ## Learning Objectives
 
